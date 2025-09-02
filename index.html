@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سایت مدیریت افراد و حضور</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="notification" id="notification"></div>
+    
+    <div class="container">
+        <header>
+            <h1>سایت مدیریت افراد و حضور</h1>
+            <p>سیستم ثبت اطلاعات، حضور و امتیازات</p>
+        </header>
+
+        <main>
+            <section id="auth-section" class="login-section">
+                <h2>لطفا نوع کاربری خود را انتخاب کنید</h2>
+                <div class="user-type">
+                    <div class="user-type-btn active" id="parent-btn">والدین</div>
+                    <div class="user-type-btn" id="coach-btn">مربی</div>
+                </div>
+                
+                <div class="login-form hidden" id="coach-login-form">
+                    <h3>ورود مربیان</h3>
+                    <div class="form-group">
+                        <label for="username">نام کاربری</label>
+                        <input type="text" id="username" placeholder="نام کاربری خود را وارد کنید">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">رمز عبور</label>
+                        <input type="password" id="password" placeholder="رمز عبور خود را وارد کنید">
+                    </div>
+                    <button id="login-btn">ورود به سیستم</button>
+                </div>
+                
+                <div id="parent-view">
+                    <h3>به بخش والدین خوش آمدید</h3>
+                    <p>در این بخش می‌توانید اطلاعات ثبت شده را مشاهده کنید.</p>
+                    <button id="view-data-btn">مشاهده اطلاعات</button>
+                </div>
+            </section>
+
+            <section id="app-section" class="hidden">
+                <div class="nav-tabs">
+                    <button class="tab-link active" onclick="openTab(event, 'register-tab')">ثبت افراد</button>
+                    <button class="tab-link" onclick="openTab(event, 'attendance-tab')">ثبت حضور</button>
+                    <button class="tab-link" onclick="openTab(event, 'score-tab')">ثبت امتیاز</button>
+                    <button class="tab-link" onclick="openTab(event, 'display-tab')">نمایش اطلاعات</button>
+                    <button id="logout-btn" style="background-color: var(--danger-color);">خروج</button>
+                </div>
+
+                <div id="register-tab" class="tab-content" style="display: block;">
+                    <h2>ثبت اطلاعات افراد</h2>
+                    <form id="person-form">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label for="name">نام</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-col">
+                                <label for="family">نام خانوادگی</label>
+                                <input type="text" id="family" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label for="age">سن</label>
+                                <input type="number" id="age" required min="1">
+                            </div>
+                            <div class="form-col">
+                                <label for="phone">شماره تماس</label>
+                                <input type="tel" id="phone" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label for="photo">عکس</label>
+                                <input type="file" id="photo" accept="image/*">
+                            </div>
+                        </div>
+                        <button type="submit">ثبت فرد</button>
+                    </form>
+                </div>
+
+                <div id="attendance-tab" class="tab-content">
+                    <h2>ثبت تاریخ حضور</h2>
+                    <form id="attendance-form">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label for="person-select">انتخاب فرد</label>
+                                <select id="person-select" required>
+                                    <option value="">لطفا یک فرد انتخاب کنید</option>
+                                </select>
+                            </div>
+                            <div class="form-col">
+                                <label for="attendance-date">تاریخ (شمسی)</label>
+                                <input type="text" id="attendance-date" placeholder="1402/01/01" required>
+                            </div>
+                        </div>
+                        <button type="submit">ثبت حضور</button>
+                    </form>
+                </div>
+
+                <div id="score-tab" class="tab-content">
+                    <h2>ثبت امتیاز (نور)</h2>
+                    <form id="score-form">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label for="score-person-select">انتخاب فرد</label>
+                                <select id="score-person-select" required>
+                                    <option value="">لطفا یک فرد انتخاب کنید</option>
+                                </select>
+                            </div>
+                            <div class="form-col">
+                                <label for="score">امتیاز</label>
+                                <input type="number" id="score" required min="0">
+                            </div>
+                        </div>
+                        <button type="submit">ثبت امتیاز</button>
+                    </form>
+                </div>
+
+                <div id="display-tab" class="tab-content">
+                    <h2>لیست افراد</h2>
+                    <div class="table-responsive">
+                        <table id="people-table">
+                            <thead>
+                                <tr>
+                                    <th>عکس</th>
+                                    <th>نام</th>
+                                    <th>نام خانوادگی</th>
+                                    <th>سن</th>
+                                    <th>شماره تماس</th>
+                                    <th>تاریخ‌های حضور</th>
+                                    <th>امتیازات</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- داده ها به صورت динамиی اضافه خواهند شد -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2023 سایت مدیریت افراد و حضور. تمامی حقوق محفوظ است.</p>
+        </footer>
+    </div>
+
+    <!-- Firebase App (پایه Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <!-- Firebase Firestore (برای دیتابیس) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="script1.js"></script>
+</body>
+</html>
